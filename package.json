@@ -21,5 +21,9 @@
   "homepage": "https://github.com/mariyka-kononchuk/nodejs-hw-01#readme",
   "devDependencies": {
     "nodemon": "^2.0.14"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
   }
 }
