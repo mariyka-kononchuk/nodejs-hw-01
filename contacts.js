@@ -1,3 +1,4 @@
+const { v4 } = require('uuid');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -10,20 +11,29 @@ async function listContacts() {
 }
 
 async function getContactById(contactId) {
-  const data = await listContacts();
-  const result = data.find(item => item.id === contactId);
+  const contacts = await listContacts();
+  const result = contacts.find(item => item.id === contactId);
   if (!result) {
     return null;
   }
   return result;
 }
 
-function removeContact(contactId) {
-  // ...твой код
+async function removeContact(contactId) {
+  const contacts = await listContacts();
+  // const newContact = { ...data, id: v4() };
+  // contacts.push(newContact);
+  // await fs.writeFile(contactsPath, JSON.stringify(contacts));
+  // return newContact;
 }
 
-function addContact(name, email, phone) {
-   fs.appendFile(contactsPath, name)
+async function addContact(name, email, phone) {
+  const contacts = await listContacts();
+  const newContact = {name, email, phone, id: v4() };
+  contacts.push(newContact);
+  await fs.writeFile(contactsPath, JSON.stringify(contacts));
+  return newContact;
+
 }
 
 const contacts = {

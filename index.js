@@ -19,7 +19,8 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case 'add':
-      // ... name email phone
+          const newContact = await contactsOperations.addContact(name, email, phone);
+          console.log(newContact);
       break;
 
     case 'remove':
@@ -31,9 +32,14 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-//самовызывающаяся функция
-invokeAction({ action: 'get', id:10 })
 
+invokeAction({
+    action: 'add',
+    name: "Marfa",
+    email: "marfa@gmail.com",
+    phone: "123-456",})
+
+//самовызывающаяся функция
 //     (async () => {
 //         await invokeAction(argv);
 //     })();
