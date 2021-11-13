@@ -6,12 +6,16 @@ const contactsOperations = require("./contacts");
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
-          const contacts = await contactsOperations.listContacts();
-          console.log(contacts);
+        const contacts = await contactsOperations.listContacts();
+        console.log(contacts);
       break;
 
     case 'get':
-      // ... id
+          const contactById = await contactsOperations.getContactById(id);
+          if (!contactById) {
+              throw new Error(`Product with id=${id} not found`)
+          }
+        console.log(contactById);
       break;
 
     case 'add':
@@ -27,4 +31,9 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-invokeAction({action: 'list'})
+//самовызывающаяся функция
+invokeAction({ action: 'get', id:10 })
+
+//     (async () => {
+//         await invokeAction(argv);
+//     })();

@@ -1,17 +1,21 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const contactsPath = path.resolve('contacts.json')
+const contactsPath = path.join(__dirname, 'db/contacts.json')
 
-function listContacts() {
-
-  fs.readFile('db/contacts.json', "utf-8")
-    .then(data => console.log(data))
-    .catch(error => console.log(error.message));
+async function listContacts() {
+  const data = await fs.readFile(contactsPath);
+  const contacts = JSON.parse(data);
+  return contacts;
 }
 
-function getContactById(contactId) {
-  // ...твой код
+async function getContactById(contactId) {
+  const data = await listContacts();
+  const result = data.find(item => item.id === contactId);
+  if (!result) {
+    return null;
+  }
+  return result;
 }
 
 function removeContact(contactId) {
@@ -19,7 +23,7 @@ function removeContact(contactId) {
 }
 
 function addContact(name, email, phone) {
-   fs.appendFile('db/contacts.json', name)
+   fs.appendFile(contactsPath, name)
 }
 
 const contacts = {
